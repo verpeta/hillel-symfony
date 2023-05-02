@@ -10,6 +10,7 @@ networks:
 
 services:
   demo-app:
+    platform: linux/x86_64 # for macOS M1 chip
     container_name: demo-app
     build:
       context: ./docker/php
@@ -17,8 +18,6 @@ services:
     depends_on:
       - demo-mysql
       - demo-redis
-    env_file:
-      - .env
     volumes:
       - ./:/app:cached
     extra_hosts:
@@ -27,6 +26,7 @@ services:
       - demo-network
 
   demo-app-nginx:
+    platform: linux/x86_64 # for macOS M1 chip
     container_name: demo-app-nginx
     build:
       context: ./docker/nginx
@@ -42,6 +42,7 @@ services:
       - traefik.http.routers.demo-nginx.rule=Host(`demo.localhost`)
 
   demo-redis:
+    platform: linux/x86_64 # for macOS M1 chip
     container_name: demo-redis
     build:
       context: ./docker/redis
@@ -60,6 +61,7 @@ services:
       - traefik.tcp.routers.demo-redis.service=demo-redis
 
   demo-mysql:
+    platform: linux/x86_64 # for macOS M1 chip
     container_name: demo-mysql
     build:
       context: ./docker/mysql
@@ -79,6 +81,7 @@ services:
       - traefik.tcp.routers.demo-mysql.service=demo-mysql
 
   demo-rabbit:
+    platform: linux/x86_64 # for macOS M1 chip
     container_name: demo-rabbit
     build:
       context: ./docker/rmq
@@ -95,6 +98,7 @@ services:
       - traefik.tcp.routers.demo-rabbit.service=demo-rabbit
 
   demo-proxy:
+    platform: linux/x86_64 # for macOS M1 chip
     container_name: demo-proxy
     image: traefik:v2.5
     command:
